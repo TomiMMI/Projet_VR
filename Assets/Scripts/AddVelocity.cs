@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AddVelocity : MonoBehaviour
 {
-    public Rigidbody z;
+    public float x, y, z;
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,6 @@ public class AddVelocity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        z.AddForce(transform.forward * 10);
+        rb.angularVelocity = new Vector3(x, y, z);
     }
 }

@@ -11,6 +11,7 @@ public class Slicer : MonoBehaviour
     public VelocityEstimator velocityEstimator;
     public LayerMask sliceableLayer;
     public Material materialInterieur;
+    public AudioClip sliceSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,8 @@ public class Slicer : MonoBehaviour
         if (hasHit)
         {
             GameObject target = hit.transform.gameObject;
+            target.GetComponent<MeshRenderer>().material = target.GetComponent<SkinnedMeshRenderer>().material;
+            target.GetComponent<SkinnedMeshRenderer>().BakeMesh(target.GetComponent<MeshFilter>().mesh, true);
             Slice(target);
         }
     }
@@ -40,12 +43,14 @@ public class Slicer : MonoBehaviour
             SetupSlicedComponent(upperHull);
             GameObject lowerHull = hull.CreateLowerHull(target,materialInterieur);
             SetupSlicedComponent(lowerHull);
+            AudioSource.PlayClipAtPoint(sliceSound, target.transform.position);
 
             Destroy(target);
         }
     }
     public void SetupSlicedComponent(GameObject slicedObject)
     {
+       slicedObject.AddComponent<BOMB>();
        Rigidbody rb = slicedObject.AddComponent<Rigidbody>();
        MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
        collider.convex = true;
