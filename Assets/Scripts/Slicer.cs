@@ -45,6 +45,11 @@ public class Slicer : MonoBehaviour
             SetupSlicedComponent(lowerHull);
             AudioSource.PlayClipAtPoint(sliceSound, target.transform.position);
 
+            if (target.CompareTag("Enemy"))
+            {
+                FindAnyObjectByType<UtilityManager>().score += 1;
+                FindAnyObjectByType<UtilityManager>().actualizeScore();
+            }
             Destroy(target);
         }
     }

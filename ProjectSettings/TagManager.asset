@@ -8,6 +8,7 @@ TagManager:
   - Spawnpoint
   - border
   - Obstacle
+  - Text
   layers:
   - Default
   - TransparentFX
